@@ -1,0 +1,55 @@
+.sidebar{
+    width: 25%;
+    float: left;
+     background-color: white; 
+    height:fit-content;
+    margin-top: 70px;
+    /* border-right: 2px solid #ced4da; */
+}
+.dashboard{
+    width:190px;
+    margin-left: 55px;
+    /* background-color: brown; */
+    height: fit-content;
+    color:#ef0b60;
+}
+.employee{
+    width:190px;
+    margin-top:50px;
+    margin-left: 50px;
+    /* background-color: brown; */
+    height: fit-content;
+    cursor: not-allowed;
+}
+.task{
+    width:190px;
+    margin-top:50px;
+    margin-left: 50px;
+    /* background-color: brown; */
+    height: fit-content;
+    cursor: not-allowed
+}
+.task2{
+    width:190px;
+    margin-top:50px;
+    margin-left: 48px;
+    /* background-color: brown; */
+    height: fit-content;
+    cursor: not-allowed
+}
+.task3{
+    width:190px;
+    margin-top:50px;
+    margin-left: 50px;
+    /* background-color: brown; */
+    height: fit-content;
+    cursor: not-allowed
+}
+.task4{
+    width:190px;
+    margin-top:50px;
+    margin-left: 45px;
+    /* background-color: brown; */
+    height: fit-content;
+    cursor: not-allowed
+}

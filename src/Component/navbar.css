@@ -1,0 +1,12 @@
+.navbar{
+    width: auto;
+    height: 75px;
+    background-color: aqua;
+    /* margin-left: 30px; */
+}
+.profile{
+    width:150px;
+    height:150px;
+    background-color: aqua;
+    border-radius: 10px;
+}

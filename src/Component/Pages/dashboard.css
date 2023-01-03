@@ -1,0 +1,33 @@
+.dashMain{
+     /* margin-left:; */
+     padding-top: 25px;
+    float: left;
+    width: 75%;
+    height:100%;
+    background-color: #f2edf3;
+    padding-left: 30px;
+    padding-right: 25px;
+}
+.home{
+    float: left;
+    width: 43px;
+    height: 40px;
+    padding-top: 6px;
+    background-color: #df2167;
+    border-radius: 4px;
+    box-shadow: 10px 10px 5px 0px rgba(197, 192, 192, 0.75);
+    color:white;
+}
+.addNewTask{
+    float: right;
+    width:180px;
+    height: 40px;
+    background-color: white;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    border: 2px solid #ef0b60;
+}
+.addNewTask:hover{
+    background-color: #f796ba;
+    border:none;
+}
