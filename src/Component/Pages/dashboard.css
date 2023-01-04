@@ -31,3 +31,17 @@
     background-color: #f796ba;
     border:none;
 }
+.addUser{
+    float:right;
+    width: 180px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: white;
+    border: 1px solid #df2167;
+    color:'black';
+    margin-bottom: 12px;
+}
+.addUser:hover{
+background-color: #f796ba;
+border:none;
+}

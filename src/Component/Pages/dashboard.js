@@ -4,11 +4,13 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 export default function Dashboard() {
+
     //Raw data for Recent Request
     const [data, setData] = useState([{ "Assignee": "Arjun Gupta", "Subject": "Regarding delay in processing", "Status": "Approved", "LastUpdate": "Dec 2022", "RequestID": "1425" },
     { "Assignee": "Nikhil Khurana", "Subject": "Slow growth in HR department", "Status": "Pending", "LastUpdate": "Nov 14 2022", "RequestID": "14325" },
     { "Assignee": "Shashank Sharma", "Subject": "Need urgent approval for clearing tax", "Status": "Pending", "LastUpdate": "Nov 22 2022", "RequestID": "13425" },
     { "Assignee": "Rajesh Gupta", "Subject": "Regarding delay in processing", "Status": "Pending", "LastUpdate": "Dec 2022", "RequestID": "2325" }])
+    
     //Raw data for Project status
     const [project, setProject] = useState([{ "Name": "Siddharth Kumar", "Due": "Jan 18 2023", "Progress": "25", "Dept": "HR", "Task": "Completion of Target till this January" }, { "Name": "Diya Dutta", "Due": "Feb 01 2022", "Progress": "75", "Dept": "Developer", "Task": "Completion of pending task" }, { "Name": "Aarav", "Due": "Jan 24 2023", "Progress": "34", "Dept": "Project Mangement", "Task": "Making report for 2022" }, { "Name": "Isha", "Due": "Feb 03 2023", "Progress": "25", "Dept": "Buisness Development", "Task": "Completion of targets" }, { "Name": "Arjun Dev", "Due": "Jan 06 2023", "Progress": "59", "Dept": "Digital Marketing", "Task": "Increase the reach by 20%" }, { "Name": "Riya Kumar", "Due": "Feb 07 2023", "Progress": "60", "Dept": "HR", "Task": "Completion of report for 2022" }])
     const [show, setShow] = useState(false);
@@ -93,7 +95,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="col-md-4 stretch-card grid-margin">
-                    <div className="card bg-gradient-success card-img-holder text-white" style={{ background: 'linear-gradient(to right, #7fd9d1 , #40d5bb)' }}>
+                    <div className="card bg-gradient-success card-img-holder text-white" style={{ background: 'linear-gradient(to right, #a2f5e7 , #40d5bb)' }}>
                         <div className="card-body">
                             <h4 className="font-weight-normal mb-3">Visitors Online &nbsp; &nbsp;<small><i class="fa-solid fa-diamond fa-sm"></i></small>
                             </h4>
@@ -107,7 +109,7 @@ export default function Dashboard() {
                 <div className="col-xl-12 grid-margin stretch-card">
                     <div className="card">
                         <div className="card-body">
-                            <h4 className="card-title" style={{ float: 'left', marginLeft: 350 }}><small>Project Status</small></h4> <button className='addNewTask' onClick={() => handleNewTask()}>Assign New Task <i class="fa-solid fa-plus" ></i></button>
+                            <h4 className="card-title" style={{ float: 'left', marginLeft: 350,color:'#ef0b60' }}><small>Project Status</small></h4> <button className='addNewTask' onClick={() => handleNewTask()}>Assign New Task <i class="fa-solid fa-plus" ></i></button>
                             <Modal show={show} onHide={handleClose}>
                                 <Modal.Header closeButton>
                                     <Modal.Title>Approval Request</Modal.Title>

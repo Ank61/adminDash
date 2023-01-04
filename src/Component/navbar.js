@@ -15,7 +15,7 @@ export default function Navbarr() {
   return (
         <Navbar  expand="lg" style={{backgroundColor:'white'}}>
           <Container>
-            <Navbar.Brand href="#home">
+            <Navbar.Brand>
             <img src={logo} alt="logo" style={{width:135,height:75}}></img>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -47,10 +47,4 @@ export default function Navbarr() {
             </Navbar.Collapse>
           </Container>
         </Navbar>)
-{/* <div className='navbar'>
-    <div >
-    <img src={logo} alt="logo" style={{width:125,height:80,marginLeft:30,float:'left'}}></img>
-    <Form.Control type="text" placeholder="Search..." style={{float:'left',width:250,marginLeft:100,marginTop:10}}/>
-    </div>
-</div> */}
 }

@@ -11,6 +11,9 @@
     margin-left: 55px;
     /* background-color: brown; */
     height: fit-content;
+    cursor: pointer;
+}
+.dashboard:hover{
     color:#ef0b60;
 }
 .employee{
@@ -19,7 +22,10 @@
     margin-left: 50px;
     /* background-color: brown; */
     height: fit-content;
-    cursor: not-allowed;
+    cursor: pointer;
+}
+.employee:hover{
+    color:#ef0b60;
 }
 .task{
     width:190px;
