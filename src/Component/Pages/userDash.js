@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import Form from './form';
 
 export default function UserDash() {
     const [allEmployee, setAllEmployee] = useState([])
@@ -11,73 +12,102 @@ export default function UserDash() {
     const [editEmp, setEditEmp] = useState({ name: "", website: "", email: "", index: "" })
     const [show, setShow] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [allError, setAllError] = useState(false);
+    const [nameErr, setNameErr] = useState(false);
+    const [emailErr, setEmailErr] = useState(false);
+    const [websiteErr, setWebsiteErr] = useState(false);
+    // const [formSelect, setFormSelect] = useState(false);
 
-    useEffect(()=>{
-axios.get("https://jsonplaceholder.typicode.com/users").then((response)=>{console.log(response.data)
-setAllEmployee(response.data)
-    }).catch((err)=>console.log(err))
-    },[])
+    useEffect(() => {
+        axios.get("https://jsonplaceholder.typicode.com/users").then((response) => {
+            console.log(response.data)
+            setAllEmployee(response.data)
+        }).catch((err) => console.log(err))
+    }, [])
+    // const handleAllError=()=>setAllError(true)
+    // const handleCloseError=()=>setAllError(false)
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {setShow(false);setAllError(false);setNameErr(false);setEmailErr(false);setWebsiteErr(false);setNewEmp({ name: "", website: "", email: "", index: "" })};
     const handleShow = () => setShow(true);
     //modal for edit button
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
+    //fucntion to delete
     function handleSubmitNewEmployee() {
         //to immediately reflect the submiited data since no get request can be sent again(it would not change the data)
-        const originalArray = [...allEmployee]
-        originalArray.push(newEmp)
-        setAllEmployee(originalArray)
-        handleClose()
-        const obj={
-            name:newEmp.name,
-            website: newEmp.website,
-            email: newEmp.email
+        if (newEmp.name === "" && newEmp.email === "" && newEmp.website === "") {
+            setAllError(true)
         }
-        axios.post(`https://jsonplaceholder.typicode.com/users`,obj).then((response)=>{
-            console.log("Added New Employee through API :",response.data)
-            toast.success("Successfully Added through API")
-        }).catch((err)=>console.log(err))
+        if(newEmp.name===""){
+            setNameErr(true)
+            setAllError(false)
+        }
+        if(newEmp.email===""){
+            setEmailErr(true)
+            setAllError(false)
+        }
+        if(newEmp.website===""){
+            setWebsiteErr(true)
+            setAllError(false)
+        }
+        else if(newEmp.name !== "" && newEmp.email !== "" && newEmp.website !== "") {
+            const originalArray = [...allEmployee]
+            originalArray.push(newEmp)
+            setAllEmployee(originalArray)
+            setNewEmp({ name: "", website: "", email: "", index: "" })
+            handleClose()
+            const obj = {
+                name: newEmp.name,
+                website: newEmp.website,
+                email: newEmp.email
+            }
+            axios.post(`https://jsonplaceholder.typicode.com/users`, obj).then((response) => {
+                console.log("Added New Employee through API :", response.data)
+                toast.success("Successfully Added through API")
+            }).catch((err) => console.log(err))
+        }
     }
     function handleNewTask() {
         handleShow()
     }
-
+//fuuction to delete 
     function handleEmpDelete(index) {
         const newItems = [...allEmployee];
         newItems.splice(index, 1);
         console.log(index)
         setAllEmployee(newItems);
-        axios.delete(`https://jsonplaceholder.typicode.com/users/${index+1}`).then((response)=>{console.log("Successfully deleted through API",response.data);
-    toast.success("Successfully deleted through API")
-    }).catch((err)=>console.log(err))
+        axios.delete(`https://jsonplaceholder.typicode.com/users/${index + 1}`).then((response) => {
+            console.log("Successfully deleted through API", response.data);
+            toast.success("Successfully deleted through API")
+        }).catch((err) => console.log(err))
     }
     //Edting a task
     function handleEmpEdit(item, index) {
-        setEditEmp((prev) => ({ ...prev, name: item.name, website:item.website, email: item.email, index: index }))
+        setEditEmp((prev) => ({ ...prev, name: item.name, website: item.website, email: item.email, index: index }))
     }
     function handleEditSubmit() {
         //to immediately reflect the edited data since no get request can be sent again(it would not change the data)
         const newItem = { ...editEmp }
         allEmployee.splice(editEmp.index, 1, editEmp)
-        const obj={
-            name : editEmp.name,
-            website :editEmp.website,
-            email:editEmp.email
+        const obj = {
+            name: editEmp.name,
+            website: editEmp.website,
+            email: editEmp.email
         }
         handleCloseEdit()
         //change through API but it will not reflect in my data as it is hardcoded
-        axios.put(`https://jsonplaceholder.typicode.com/users/${editEmp.index+1}`,obj).then((response)=>{console.log("Edited Successfully through API : ",response.data);
-        toast.success("Edit Successfull through API!")
-    }).catch((err)=>console.log(err))
-
+        axios.put(`https://jsonplaceholder.typicode.com/users/${editEmp.index + 1}`, obj).then((response) => {
+            console.log("Edited Successfully through API : ", response.data);
+            toast.success("Edit Successfull through API!")
+        }).catch((err) => console.log(err))
     }
+
 
 
     return (
         <div className='dashMain'>
-            <Toaster/>
+            <Toaster />
             <div>
                 <div className='home'><i class="fa-solid fa-user"></i></div>
                 <h5 style={{ marginRight: 700, paddingTop: 8, }}>All Employee </h5>
@@ -94,18 +124,13 @@ setAllEmployee(response.data)
                                             <Modal.Title>Add New User</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <label>Name : </label>
-                                            <input type="text" className='form-control' placeholder='Enter name' value={newEmp.name} onChange={(e) => setNewEmp((prev) => ({ ...prev, name: e.target.value }))} ></input>
-                                            <label>Website : </label>
-                                            <input type="text" className='form-control' placeholder='Enter department' value={newEmp.website} onChange={(e) => setNewEmp((prev) => ({ ...prev, website: e.target.value }))}></input>
-                                            <label>Email : </label>
-                                            <input type="text" className='form-control' placeholder='Enter email' value={newEmp.email} onChange={(e) => setNewEmp((prev) => ({ ...prev, email: e.target.value }))}></input>
+                                            <Form Employee={newEmp} newUser={show} allError={allError} nameErr={nameErr} emailErr={emailErr} websiteErr={websiteErr} setEmployee={setNewEmp} />
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <Button variant="secondary" onClick={handleClose}>
                                                 Close
                                             </Button>
-                                            <Button variant="primary" onClick={() => { handleSubmitNewEmployee() }}>
+                                            <Button variant="primary" onClick={() =>  handleSubmitNewEmployee()}>
                                                 Add
                                             </Button>
                                         </Modal.Footer>
@@ -120,27 +145,22 @@ setAllEmployee(response.data)
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {allEmployee.length>0?allEmployee.map((item, index) =>
+                                        {allEmployee.length > 0 ? allEmployee.map((item, index) =>
                                             <tr>
-                                                <td>{index+1}</td>
+                                                <td>{index + 1}</td>
                                                 <td>{item.name}</td>
                                                 <td>{item.website}</td>
                                                 <td>{item.email}</td>
                                                 <td><button style={{ backgroundColor: 'white', color: '#27ae96', border: 'none' }} onClick={() => { handleEmpEdit(item, index); handleShowEdit() }}><i class="fa-solid fa-pen-to-square"></i></button> <button style={{ backgroundColor: 'white', border: 'none', color: 'red' }} onClick={() => handleEmpDelete(index)}><i class="fa-solid fa-trash"></i></button></td>
                                             </tr>
-                                        ):"Loading..."}
+                                        ) : "Loading..."}
                                     </tbody>
                                     <Modal show={showEdit} onHide={handleCloseEdit}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Edit User</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <label>Name : </label>
-                                            <input type="text" className='form-control' placeholder='Enter task' value={editEmp.name} onChange={(e) => setEditEmp((prevState) => ({ ...prevState, name: e.target.value }))} ></input>
-                                            <label>Website : </label>
-                                            <input type="text" className='form-control' placeholder='Enter departmentt' value={editEmp.website} onChange={(e) => setEditEmp((prevState) => ({ ...prevState, website: e.target.value }))} ></input>
-                                            <label>Email </label>
-                                            <input type="text" className='form-control' placeholder='Enter name' value={editEmp.email} onChange={(e) => setEditEmp((prevState) => ({ ...prevState, email: e.target.value }))}></input>
+                                            <Form Edit={editEmp} EditUser={showEdit} setEdit={setEditEmp} />
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <Button variant="secondary" onClick={handleCloseEdit}>
