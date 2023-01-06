@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
-export default function Form({ Employee, setEmployee, newUser,nameErr,emailErr,websiteErr,allError, showAllError,Edit, setEdit, EditUser }) {
+export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsite,newUser,nameErr,emailErr,websiteErr,allError, showAllError,Edit, setEdit, EditUser }) {
     const [nameError, setNameError] = useState("")
     const [emailError, setEmailError] = useState("")
     const [websiteError, setWebsiteError] = useState("")
@@ -21,11 +21,6 @@ export default function Form({ Employee, setEmployee, newUser,nameErr,emailErr,w
         }
         if(websiteErr){
             setWebsiteError("Website is required")
-        }
-        else{
-            setNameError("")
-            setEmailError("")
-            setWebsiteError("")
         }
     },[allError,nameErr,emailErr,websiteErr])
 
@@ -48,6 +43,7 @@ export default function Form({ Employee, setEmployee, newUser,nameErr,emailErr,w
     function handleNameBlur() {
         if (Employee.name === "") {
             setNameError("Name is required")
+            setName(true)
         }
         else {
             setNameError("")
@@ -70,9 +66,11 @@ export default function Form({ Employee, setEmployee, newUser,nameErr,emailErr,w
     function handleEmailBlur() {
         if (Employee.email === "") {
             setEmailError("Email is required")
+            setEmail(true)
         }
         if (emailError !== "" || !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(Employee.email)) {
             setEmailError("Email is required")
+            setEmail(true)
         }
         else {
             setEmailError("")
@@ -95,9 +93,11 @@ export default function Form({ Employee, setEmployee, newUser,nameErr,emailErr,w
     function handleWebsiteBlur() {
         if (Employee.website === "") {
             setWebsiteError("Website is required")
+            setWebsite(true)
         }
         if (websiteError !== "" || !/[a-z0-9]+-?[a-z0-9]+\.(org|com)(\.[a-z]+)?/i.test(Employee.website)) {
             setWebsiteError("Website is required")
+            setWebsite(true)
         }
         else {
             setWebsiteError("")

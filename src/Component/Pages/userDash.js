@@ -24,54 +24,62 @@ export default function UserDash() {
             setAllEmployee(response.data)
         }).catch((err) => console.log(err))
     }, [])
-    // const handleAllError=()=>setAllError(true)
-    // const handleCloseError=()=>setAllError(false)
 
-    const handleClose = () => {setShow(false);setAllError(false);setNameErr(false);setEmailErr(false);setWebsiteErr(false);setNewEmp({ name: "", website: "", email: "", index: "" })};
+    //function for New User modal 
+    const handleClose = () => { setShow(false); setAllError(false); setNameErr(false); setEmailErr(false); setWebsiteErr(false); setNewEmp({ name: "", website: "", email: "", index: "" }) };
     const handleShow = () => setShow(true);
     //modal for edit button
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
+    const [name,setName] = useState(false)
+    const [email,setEmail] = useState(false)
+    const [website,setWebsite] = useState(false)
     //fucntion to delete
     function handleSubmitNewEmployee() {
         //to immediately reflect the submiited data since no get request can be sent again(it would not change the data)
         if (newEmp.name === "" && newEmp.email === "" && newEmp.website === "") {
             setAllError(true)
         }
-        if(newEmp.name===""){
+        if (newEmp.name === "") {
             setNameErr(true)
             setAllError(false)
         }
-        if(newEmp.email===""){
+        if (newEmp.email === "") {
             setEmailErr(true)
             setAllError(false)
         }
-        if(newEmp.website===""){
+        if (newEmp.website === "") {
             setWebsiteErr(true)
             setAllError(false)
         }
-        else if(newEmp.name !== "" && newEmp.email !== "" && newEmp.website !== "") {
-            const originalArray = [...allEmployee]
-            originalArray.push(newEmp)
-            setAllEmployee(originalArray)
-            setNewEmp({ name: "", website: "", email: "", index: "" })
-            handleClose()
-            const obj = {
-                name: newEmp.name,
-                website: newEmp.website,
-                email: newEmp.email
+        else {
+        //  setNameErr("")
+        //  setEmailErr("")
+        //  setWebsiteErr("")
+            console.log('inisde else clicked')
+            if(!nameErr && !emailErr && !websiteErr){
+                const originalArray = [...allEmployee]
+                originalArray.push(newEmp)
+                setAllEmployee(originalArray)
+                setNewEmp({ name: "", website: "", email: "", index: "" })
+                handleClose()
+                const obj = {
+                    name: newEmp.name,
+                    website: newEmp.website,
+                    email: newEmp.email
+                }
+                axios.post(`https://jsonplaceholder.typicode.com/users`, obj).then((response) => {
+                    console.log("Added New Employee through API :", response.data)
+                    toast.success("Successfully Added through API")
+                }).catch((err) => console.log(err))
             }
-            axios.post(`https://jsonplaceholder.typicode.com/users`, obj).then((response) => {
-                console.log("Added New Employee through API :", response.data)
-                toast.success("Successfully Added through API")
-            }).catch((err) => console.log(err))
         }
     }
     function handleNewTask() {
         handleShow()
     }
-//fuuction to delete 
+    //fuuction to delete 
     function handleEmpDelete(index) {
         const newItems = [...allEmployee];
         newItems.splice(index, 1);
@@ -124,13 +132,13 @@ export default function UserDash() {
                                             <Modal.Title>Add New User</Modal.Title>
                                         </Modal.Header>
                                         <Modal.Body>
-                                            <Form Employee={newEmp} newUser={show} allError={allError} nameErr={nameErr} emailErr={emailErr} websiteErr={websiteErr} setEmployee={setNewEmp} />
+                                            <Form Employee={newEmp} newUser={show} allError={allError} nameErr={nameErr} setWebsite={setWebsite} setName={setName} setEmail={setEmail} emailErr={emailErr} websiteErr={websiteErr} setEmployee={setNewEmp} />
                                         </Modal.Body>
                                         <Modal.Footer>
                                             <Button variant="secondary" onClick={handleClose}>
                                                 Close
                                             </Button>
-                                            <Button variant="primary" onClick={() =>  handleSubmitNewEmployee()}>
+                                            <Button variant="primary" onClick={() => handleSubmitNewEmployee()}>
                                                 Add
                                             </Button>
                                         </Modal.Footer>
