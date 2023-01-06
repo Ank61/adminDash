@@ -26,13 +26,13 @@ export default function UserDash() {
     }, [])
 
     //function for New User modal 
-    const handleClose = () => { setShow(false); setAllError(false); setNameErr(false); setEmailErr(false); setWebsiteErr(false); setNewEmp({ name: "", website: "", email: "", index: "" }) };
+    const handleClose = () => { setShow(false); setAllError(false); setNameErr(false); setEmailErr(false); setWebsiteErr(false); setNewEmp({ name: "", website: "", email: "", index: "" }); setName(false);setEmail(false);setWebsite(false) };
     const handleShow = () => setShow(true);
     //modal for edit button
     const handleCloseEdit = () => setShowEdit(false);
     const handleShowEdit = () => setShowEdit(true);
 
-    const [name,setName] = useState(false)
+    const [namesection,setName] = useState(false)
     const [email,setEmail] = useState(false)
     const [website,setWebsite] = useState(false)
     //fucntion to delete
@@ -54,11 +54,8 @@ export default function UserDash() {
             setAllError(false)
         }
         else {
-        //  setNameErr("")
-        //  setEmailErr("")
-        //  setWebsiteErr("")
-            console.log('inisde else clicked')
-            if(!nameErr && !emailErr && !websiteErr){
+            if( !website && !email && !namesection && newEmp.name !== "" && newEmp.website !== "" && newEmp.email !== ""){
+                console.log('inside...')
                 const originalArray = [...allEmployee]
                 originalArray.push(newEmp)
                 setAllEmployee(originalArray)

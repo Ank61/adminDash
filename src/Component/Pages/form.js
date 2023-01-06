@@ -22,6 +22,11 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
         if(websiteErr){
             setWebsiteError("Website is required")
         }
+        else{
+            setNameError("")
+            setEmailError("")
+            setWebsiteError("")
+        }
     },[allError,nameErr,emailErr,websiteErr])
 
     var Name;
@@ -35,6 +40,7 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
         }
         else {
             setNameError("")
+            setName(false)
         }
     }
     function handleNamefocus() {
@@ -45,8 +51,13 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
             setNameError("Name is required")
             setName(true)
         }
+        if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~0-9]/.test(Employee.name)) {
+            setNameError("Name is required")
+            setName(true)
+        }
         else {
             setNameError("")
+            setName(false)
         }
     }
     //function for Email validation 
@@ -58,6 +69,7 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
         }
         else {
             setEmailError("")
+            setEmail(false)
         }
     }
     function handleEmailfocus() {
@@ -74,6 +86,7 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
         }
         else {
             setEmailError("")
+            setEmail(false)
         }
     }
     //function for website validation 
@@ -85,6 +98,7 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
         }
         else {
             setWebsiteError("")
+            setWebsite(false)
         }
     }
     function handleWebsitefocus() {
@@ -101,6 +115,7 @@ export default function Form({ Employee, setEmployee,setName ,setEmail,setWebsit
         }
         else {
             setWebsiteError("")
+            setWebsite(false)
         }
     }
 
