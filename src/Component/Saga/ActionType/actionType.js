@@ -1,0 +1,1 @@
+export const ASYNC_FETCH = "ASYNC_FETCH"

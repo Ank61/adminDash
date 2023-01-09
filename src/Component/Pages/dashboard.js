@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import './dashboard.css';
+// import { fetch } from '../Saga/Actions/action';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+// import { useSelector } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 
 export default function Dashboard() {
 
@@ -19,6 +22,15 @@ export default function Dashboard() {
     const [newTask, setNewTask] = useState({ Task: "", Dept: "", Name: "", Due: "", Progress: "0" })
     const [editTask, setEditTask] = useState({ Task: "", Dept: "", Name: "", Due: "", Progress: "0", index: "" })
     const [toBeApprove, setToBeApprove] = useState({ Assignee: "", Subject: "", Status: "", LastUpdate: "", RequestID: "0", index: "" })
+
+    // useEffect(() => {
+    //     // Update the document title using the browser API
+    //     allData()
+    //     console.log('allData action send')
+    //     console.log("This is value ...",value)
+    //   },[]);
+    // const array = useSelector(state => state.data);
+    // const dispatch = useDispatch();
 
     //modal for new Task
     const handleClose = () => setShow(false);

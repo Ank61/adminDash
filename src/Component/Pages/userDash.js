@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import '../Pages/dashboard.css';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import { fetch } from '../Saga/Actions/action';
+import { useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import Form from './form';
 
 export default function UserDash() {
@@ -17,13 +20,26 @@ export default function UserDash() {
     const [emailErr, setEmailErr] = useState(false);
     const [websiteErr, setWebsiteErr] = useState(false);
     // const [formSelect, setFormSelect] = useState(false);
+    const array = useSelector((state)=>state.data)
+    const dispatch = useDispatch(); 
+    const usePrevious = (value) => {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
+    const prevCount = usePrevious(array);
 
     useEffect(() => {
-        axios.get("https://jsonplaceholder.typicode.com/users").then((response) => {
-            console.log(response.data)
-            setAllEmployee(response.data)
-        }).catch((err) => console.log(err))
-    }, [])
+        if(prevCount !== array){
+            dispatch(fetch())
+        }
+    },[])
+
+useEffect(()=>{
+    setAllEmployee(array)
+},[array])
 
     //function for New User modal 
     const handleClose = () => { setShow(false); setAllError(false); setNameErr(false); setEmailErr(false); setWebsiteErr(false); setNewEmp({ name: "", website: "", email: "", index: "" }); setName(false);setEmail(false);setWebsite(false) };
@@ -107,8 +123,6 @@ export default function UserDash() {
             toast.success("Edit Successfull through API!")
         }).catch((err) => console.log(err))
     }
-
-
 
     return (
         <div className='dashMain'>
